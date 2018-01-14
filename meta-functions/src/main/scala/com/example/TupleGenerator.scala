@@ -5,6 +5,19 @@ import scala.meta._
 
 @compileTimeOnly("TupleGenerator not expanded")
 class TupleGenerator(n: Int) extends StaticAnnotation {
+  /*
+  * `@TupleGenerator(2) object X` generates following codes (tuple classes and tuple factory functions):
+  * ```
+  * object X {
+  *   case class MyTuple1[A1](_1: A1)
+  *   case class MyTuple2[A1, A2](_1: A1, _2: A2)
+  *
+  *   def MyTuple[A1](_1: A1) = MyTuple1(_1)
+  *   def MyTuple[A2](_1: A1, _2: A2) = MyTuple2(_1, _2)
+  * }
+  * ```
+  * the annotation argument defines the maximum generated tuple size
+  * */
   inline def apply(defn: Any): Any = meta {
     val q"object $name" = defn
     val q"new $_(${num: Term.Arg})" = this
