@@ -3,7 +3,8 @@ import scala.collection.immutable.Seq
 import scala.meta._
 
 object Main {
-  import MetaFunctions._
+//  import MetaFunctions._
+  import com.example.TupleGenerator
 
   @TupleGenerator(10) object Test
 
